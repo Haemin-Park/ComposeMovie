@@ -1,6 +1,8 @@
 package com.example.movie.data
 
-data class FilmsItem(
+import com.example.movie.model.Film
+
+data class FilmItem(
     val description: String,
     val director: String,
     val id: String,
@@ -18,4 +20,11 @@ data class FilmsItem(
     val title: String,
     val url: String,
     val vehicles: List<String>
+)
+
+fun FilmItem.toModel() = Film(
+    director = director,
+    movieBanner = movie_banner,
+    score = rt_score,
+    title = title
 )
