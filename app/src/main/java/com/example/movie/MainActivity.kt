@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview() {
     MovieTheme {
         FilmItemView(film = fakeFilmData) {
-            
+
         }
     }
 }

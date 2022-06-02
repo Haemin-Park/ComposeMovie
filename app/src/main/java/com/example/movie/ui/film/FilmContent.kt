@@ -16,7 +16,7 @@ import com.example.movie.model.fakeFilmData
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun FilmsContent(viewModel: FilmViewModel, navController: NavController) {
+fun FilmsContent(viewModel: FilmViewModel, navigateToDetail: () -> Unit) {
     val items by viewModel.films.observeAsState()
 
     items?.let {
@@ -29,7 +29,7 @@ fun FilmsContent(viewModel: FilmViewModel, navController: NavController) {
             items(items = it) { film ->
                 FilmItemView(film = film) {
                     viewModel.selectFilm(film)
-                    navController.navigate(AppDestinations.DETAIL)
+                    navigateToDetail()
                 }
             }
         }

@@ -17,7 +17,7 @@ fun MovieApp() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            AppNavGraph(
+            MovieAppNavGraph(
                 navController = navController
             )
         }
