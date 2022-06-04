@@ -26,5 +26,6 @@ fun FilmItem.toModel() = Film(
     director = director,
     movieBanner = movie_banner,
     score = rt_score,
-    title = title
+    title = title,
+    description = description
 )

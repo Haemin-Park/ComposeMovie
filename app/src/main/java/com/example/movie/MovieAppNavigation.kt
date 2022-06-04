@@ -11,4 +11,8 @@ class MovieAppNavigationActions(navController: NavHostController) {
     val navigateToDetail: () -> Unit = {
         navController.navigate(AppDestinations.DETAIL)
     }
+
+    val back: () -> Unit = {
+        navController.navigateUp()
+    }
 }

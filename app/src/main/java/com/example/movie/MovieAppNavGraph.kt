@@ -40,7 +40,10 @@ fun MovieAppNavGraph(
             val film by viewModel<FilmViewModel>(viewModelStoreOwner = viewModelStoreOwner).selectedFilm.observeAsState()
 
             film?.let {
-                FilmDetailScreen(film = it)
+                FilmDetailScreen(
+                    film = it,
+                    back = navigationActions.back
+                )
             }
         }
     }
