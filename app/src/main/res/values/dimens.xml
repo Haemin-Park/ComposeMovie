@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="padding_large">20dp</dimen>
     <dimen name="padding_normal">12dp</dimen>
     <dimen name="padding_small">8dp</dimen>
 
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="card_height">300dp</dimen>
+
+    <dimen name="banner_height">500dp</dimen>
 </resources>

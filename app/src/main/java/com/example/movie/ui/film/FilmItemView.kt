@@ -8,6 +8,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +21,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.buildAnnotatedString
@@ -40,8 +41,28 @@ fun FilmItemView(film: Film, onClick: () -> Unit) {
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
             .placeholder(R.drawable.placeholder)
-            .data(film.movieBanner)
+            .data(film.image)
             .build()
+    )
+
+    val starId = "starId"
+    val inlineContent = mapOf(
+        Pair(
+            starId,
+            InlineTextContent(
+                Placeholder(
+                    width = 1.em,
+                    height = 1.em,
+                    placeholderVerticalAlign = PlaceholderVerticalAlign.TextCenter
+                )
+            ) {
+                Image(
+                    imageVector = Icons.Rounded.Star,
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(Color.White),
+                    alignment = Alignment.Center
+                )
+            })
     )
 
     Card(
@@ -78,27 +99,11 @@ fun FilmItemView(film: Film, onClick: () -> Unit) {
                 Text(text = film.title, style = MaterialTheme.typography.h5, color = Color.White)
                 Text(
                     text = buildAnnotatedString {
-                        appendInlineContent("starIcon", "starIcon")
+                        appendInlineContent(starId, starId)
                         append(film.score)
                     },
-                    inlineContent = mapOf(
-                        Pair(
-                            "starIcon",
-                            InlineTextContent(
-                                Placeholder(
-                                    width = 1.em,
-                                    height = 1.em,
-                                    placeholderVerticalAlign = PlaceholderVerticalAlign.TextCenter
-                                )
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.ic_baseline_star_24),
-                                    contentDescription = null,
-                                    colorFilter = ColorFilter.tint(Color.White),
-                                    alignment = Alignment.Center
-                                )
-                            })
-                    ), color = Color.White
+                    inlineContent = inlineContent,
+                    color = Color.White
                 )
             }
         }

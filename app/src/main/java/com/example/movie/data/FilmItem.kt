@@ -24,8 +24,12 @@ data class FilmItem(
 
 fun FilmItem.toModel() = Film(
     director = director,
+    image = image,
     movieBanner = movie_banner,
     score = rt_score,
     title = title,
-    description = description
+    originalTitle = original_title,
+    description = description,
+    releaseDate = release_date,
+    runningTime = running_time
 )
