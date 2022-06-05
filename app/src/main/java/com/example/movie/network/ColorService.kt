@@ -5,8 +5,8 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object NetworkService {
-    private const val BASE_URL = "https://ghibliapi.herokuapp.com/"
+object ColorService {
+    private const val BASE_URL = "https://api.color.pizza/"
     private val okHttpClient = OkHttpClient.Builder()
         .build()
 
@@ -18,5 +18,5 @@ object NetworkService {
         .baseUrl(BASE_URL)
         .build()
 
-    val api: Api = retrofit.create(Api::class.java)
+    val api: ColorApi = retrofit.create(ColorApi::class.java)
 }

@@ -13,6 +13,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.movie.ui.film.FilmDetailScreen
 import com.example.movie.ui.film.FilmViewModel
 import com.example.movie.ui.film.FilmsContent
+import com.example.movie.ui.people.PeopleScreen
+import com.example.movie.ui.people.PeopleViewModel
 
 @Composable
 fun MovieAppNavGraph(
@@ -35,6 +37,11 @@ fun MovieAppNavGraph(
                 viewModel = viewModel,
                 navigateToDetail = navigationActions.navigateToDetail
             )
+        }
+        composable(AppDestinations.PEOPLE) {
+            val viewModel: PeopleViewModel = viewModel()
+
+            PeopleScreen(viewModel = viewModel)
         }
         composable(AppDestinations.DETAIL) {
             val film by viewModel<FilmViewModel>(viewModelStoreOwner = viewModelStoreOwner).selectedFilm.observeAsState()

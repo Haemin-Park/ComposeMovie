@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movie.data.FilmItem
 import com.example.movie.data.Result
 import com.example.movie.data.safeApiCall
 import com.example.movie.data.toModel
 import com.example.movie.model.Film
-import com.example.movie.network.NetworkService
+import com.example.movie.network.MovieService
 import kotlinx.coroutines.launch
 
 class FilmViewModel : ViewModel() {
@@ -27,7 +26,7 @@ class FilmViewModel : ViewModel() {
 
     private fun getFilms() {
         viewModelScope.launch {
-            when (val result = safeApiCall { NetworkService.api.getFilms() }) {
+            when (val result = safeApiCall { MovieService.api.getFilms() }) {
                 is Result.Success -> {
                     _films.value = result.data.map { it.toModel() }
                 }

@@ -4,6 +4,7 @@ import androidx.navigation.NavHostController
 
 object AppDestinations {
     const val HOME = "home"
+    const val PEOPLE = "people"
     const val DETAIL = "detail"
 }
 

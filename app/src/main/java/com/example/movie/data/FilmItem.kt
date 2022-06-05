@@ -31,5 +31,5 @@ fun FilmItem.toModel() = Film(
     originalTitle = original_title,
     description = description,
     releaseDate = release_date,
-    runningTime = running_time
+    runningTime = "$running_time min"
 )

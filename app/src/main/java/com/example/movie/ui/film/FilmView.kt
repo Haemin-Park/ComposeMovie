@@ -37,7 +37,7 @@ import com.example.movie.ui.theme.MovieTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FilmItemView(film: Film, onClick: () -> Unit) {
+fun FilmView(film: Film, onClick: () -> Unit) {
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
             .placeholder(R.drawable.placeholder)
@@ -76,7 +76,7 @@ fun FilmItemView(film: Film, onClick: () -> Unit) {
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(dimensionResource(id = R.dimen.card_height))
+                    .height(dimensionResource(id = R.dimen.film_card_height))
                     .drawWithCache {
                         val gradient = Brush.verticalGradient(
                             colors = listOf(Color.Transparent, Color.Black),
@@ -122,7 +122,7 @@ fun FilmItemViewPreview(
     ) film: Film
 ) {
     MovieTheme {
-        FilmItemView(film) {
+        FilmView(film) {
 
         }
     }
