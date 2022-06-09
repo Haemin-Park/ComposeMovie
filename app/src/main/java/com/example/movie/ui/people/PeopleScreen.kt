@@ -4,9 +4,9 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,7 +26,7 @@ fun PeopleScreen(viewModel: PeopleViewModel) {
             modifier = Modifier.background(
                 selectedPerson?.hairColor ?: MaterialTheme.colors.background
             ),
-            cells = GridCells.Fixed(3),
+            columns = GridCells.Fixed(3),
             contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_normal)),
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_normal)),
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_normal))

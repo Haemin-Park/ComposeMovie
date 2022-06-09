@@ -5,12 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movie.data.*
-import com.example.movie.model.Film
+import com.example.movie.data.Color
+import com.example.movie.data.defaultColor
 import com.example.movie.model.Person
 import com.example.movie.network.ColorService
 import com.example.movie.network.MovieService
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class PeopleViewModel : ViewModel() {

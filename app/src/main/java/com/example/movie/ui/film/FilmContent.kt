@@ -4,9 +4,9 @@ package com.example.movie.ui.film
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -20,7 +20,7 @@ fun FilmsContent(viewModel: FilmViewModel, navigateToDetail: () -> Unit) {
 
     items?.let {
         LazyVerticalGrid(
-            cells = GridCells.Fixed(2),
+            columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_normal)),
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_normal)),
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_normal))

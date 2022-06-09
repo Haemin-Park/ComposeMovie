@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -31,7 +32,7 @@ fun MovieAppNavGraph(
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(AppDestinations.HOME) {
-            val viewModel: FilmViewModel = viewModel(viewModelStoreOwner = viewModelStoreOwner)
+            val viewModel = hiltViewModel<FilmViewModel>(viewModelStoreOwner = viewModelStoreOwner)
 
             FilmsContent(
                 viewModel = viewModel,
@@ -44,7 +45,7 @@ fun MovieAppNavGraph(
             PeopleScreen(viewModel = viewModel)
         }
         composable(AppDestinations.DETAIL) {
-            val film by viewModel<FilmViewModel>(viewModelStoreOwner = viewModelStoreOwner).selectedFilm.observeAsState()
+            val film by hiltViewModel<FilmViewModel>(viewModelStoreOwner = viewModelStoreOwner).selectedFilm.observeAsState()
 
             film?.let {
                 FilmDetailScreen(

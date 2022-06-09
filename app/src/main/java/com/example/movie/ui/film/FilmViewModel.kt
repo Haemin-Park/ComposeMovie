@@ -1,17 +1,20 @@
 package com.example.movie.ui.film
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.movie.data.Result
 import com.example.movie.data.safeApiCall
+import com.example.movie.data.source.FilmRepository
 import com.example.movie.data.toModel
 import com.example.movie.model.Film
 import com.example.movie.network.MovieService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FilmViewModel : ViewModel() {
+@HiltViewModel
+class FilmViewModel @Inject constructor(
+    private val filmRepository: FilmRepository
+) : ViewModel() {
     private val _films = MutableLiveData<List<Film>>()
     val films: LiveData<List<Film>>
         get() = _films
@@ -26,7 +29,7 @@ class FilmViewModel : ViewModel() {
 
     private fun getFilms() {
         viewModelScope.launch {
-            when (val result = safeApiCall { MovieService.api.getFilms() }) {
+            when (val result = filmRepository.getFilms()) {
                 is Result.Success -> {
                     _films.value = result.data.map { it.toModel() }
                 }
