@@ -17,7 +17,7 @@ class PeopleViewModel @Inject constructor(
     private val peopleRepository: PeopleRepository,
     private val colorRepository: ColorRepository
 ) : ViewModel() {
-    private val _people = MutableLiveData<List<Person>>()
+    private val _people = MutableLiveData<List<Person>>(listOf())
     val people: LiveData<List<Person>>
         get() = _people
 
@@ -33,8 +33,8 @@ class PeopleViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = peopleRepository.getPeople()) {
                 is Result.Success -> {
-                    _people.value = result.data.map {
-                        it.toModel(getColorCode(it).rgb)
+                    result.data.map {
+                        _people.value = _people.value?.plus(it.toModel(getColorCode(it).rgb))
                     }
                 }
                 is Result.Error -> {

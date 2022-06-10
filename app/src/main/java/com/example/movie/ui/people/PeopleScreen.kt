@@ -31,7 +31,7 @@ fun PeopleScreen(viewModel: PeopleViewModel) {
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_normal)),
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_normal))
         ) {
-            items(items = it) { person ->
+            items(items = it, key = { person -> person.id }) { person ->
                 PersonView(person = person) {
                     viewModel.selectPerson(person)
                 }

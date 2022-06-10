@@ -16,6 +16,7 @@ data class PersonItem(
 )
 
 fun PersonItem.toModel(hairRgb: Rgb) = Person(
+    id = id,
     hairColor = Color(hairRgb.r, hairRgb.g, hairRgb.b),
     name = name
 )
