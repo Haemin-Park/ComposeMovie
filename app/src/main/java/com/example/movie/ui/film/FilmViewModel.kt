@@ -2,11 +2,9 @@ package com.example.movie.ui.film
 
 import androidx.lifecycle.*
 import com.example.movie.data.Result
-import com.example.movie.data.safeApiCall
-import com.example.movie.data.source.FilmRepository
+import com.example.movie.data.source.repository.FilmRepository
 import com.example.movie.data.toModel
 import com.example.movie.model.Film
-import com.example.movie.network.MovieService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

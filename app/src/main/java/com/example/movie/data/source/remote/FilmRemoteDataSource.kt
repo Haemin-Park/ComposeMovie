@@ -7,7 +7,6 @@ import com.example.movie.data.source.FilmDataSource
 import com.example.movie.network.MovieService
 
 object FilmRemoteDataSource : FilmDataSource {
-    override suspend fun getFilms(): Result<List<FilmItem>> {
-        return safeApiCall { MovieService.api.getFilms() }
-    }
+    override suspend fun getFilms(): Result<List<FilmItem>> =
+        safeApiCall { MovieService.api.getFilms() }
 }

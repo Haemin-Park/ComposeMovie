@@ -5,14 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movie.data.*
-import com.example.movie.data.Color
-import com.example.movie.data.defaultColor
+import com.example.movie.data.source.repository.ColorRepository
+import com.example.movie.data.source.repository.PeopleRepository
 import com.example.movie.model.Person
-import com.example.movie.network.ColorService
-import com.example.movie.network.MovieService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PeopleViewModel : ViewModel() {
+@HiltViewModel
+class PeopleViewModel @Inject constructor(
+    private val peopleRepository: PeopleRepository,
+    private val colorRepository: ColorRepository
+) : ViewModel() {
     private val _people = MutableLiveData<List<Person>>()
     val people: LiveData<List<Person>>
         get() = _people
@@ -27,7 +31,7 @@ class PeopleViewModel : ViewModel() {
 
     private fun getPeople() {
         viewModelScope.launch {
-            when (val result = safeApiCall { MovieService.api.getPeople() }) {
+            when (val result = peopleRepository.getPeople()) {
                 is Result.Success -> {
                     _people.value = result.data.map {
                         it.toModel(getColorCode(it).rgb)
@@ -41,9 +45,8 @@ class PeopleViewModel : ViewModel() {
     }
 
     private suspend fun getColorCode(person: PersonItem): Color {
-        return when (val result = safeApiCall {
-            ColorService.api.getColorCod(person.hair_color)
-        }) {
+        return when (val result = colorRepository.getColorCode(person.hair_color)
+        ) {
             is Result.Success -> {
                 if (result.data.colors.isNotEmpty()) result.data.colors[0] else defaultColor
             }
@@ -53,7 +56,7 @@ class PeopleViewModel : ViewModel() {
         }
     }
 
-    fun selectPerson(person: Person){
+    fun selectPerson(person: Person) {
         _selectedPerson.value = person
     }
 }

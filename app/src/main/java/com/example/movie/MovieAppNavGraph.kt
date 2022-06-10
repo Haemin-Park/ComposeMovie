@@ -40,7 +40,7 @@ fun MovieAppNavGraph(
             )
         }
         composable(AppDestinations.PEOPLE) {
-            val viewModel: PeopleViewModel = viewModel()
+            val viewModel = hiltViewModel<PeopleViewModel>()
 
             PeopleScreen(viewModel = viewModel)
         }
