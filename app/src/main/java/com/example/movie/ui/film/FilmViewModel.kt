@@ -17,9 +17,7 @@ class FilmViewModel @Inject constructor(
     val films: LiveData<List<Film>>
         get() = _films
 
-    private val _selectedFilm = MutableLiveData<Film>()
-    val selectedFilm: LiveData<Film>
-        get() = _selectedFilm
+    val selectedFilm = filmRepository.observeFilmSelected()
 
     init {
         getFilms()
@@ -38,7 +36,7 @@ class FilmViewModel @Inject constructor(
         }
     }
 
-    fun selectFilm(film: Film){
-        _selectedFilm.value = film
+    fun selectFilm(film: Film) {
+        filmRepository.selectedFilm(film)
     }
 }

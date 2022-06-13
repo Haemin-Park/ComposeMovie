@@ -1,26 +1,24 @@
 package com.example.movie
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.movie.ui.film.FilmDetailScreen
+import com.example.movie.ui.Screen
 import com.example.movie.ui.film.FilmViewModel
 import com.example.movie.ui.film.FilmsContent
+import com.example.movie.ui.film.FilmDetailScreen
 import com.example.movie.ui.people.PeopleScreen
 import com.example.movie.ui.people.PeopleViewModel
 
 @Composable
 fun MovieAppNavGraph(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = AppDestinations.HOME
+    startDestination: String = Screen.Home.route
 ) {
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
@@ -31,7 +29,7 @@ fun MovieAppNavGraph(
     }
 
     NavHost(navController = navController, startDestination = startDestination) {
-        composable(AppDestinations.HOME) {
+        composable(Screen.Home.route) {
             val viewModel = hiltViewModel<FilmViewModel>(viewModelStoreOwner = viewModelStoreOwner)
 
             FilmsContent(
@@ -39,20 +37,18 @@ fun MovieAppNavGraph(
                 navigateToDetail = navigationActions.navigateToDetail
             )
         }
-        composable(AppDestinations.PEOPLE) {
+        composable(Screen.People.route) {
             val viewModel = hiltViewModel<PeopleViewModel>()
 
             PeopleScreen(viewModel = viewModel)
         }
-        composable(AppDestinations.DETAIL) {
-            val film by hiltViewModel<FilmViewModel>(viewModelStoreOwner = viewModelStoreOwner).selectedFilm.observeAsState()
+        composable(Screen.Detail.route) {
+            val viewModel = hiltViewModel<FilmViewModel>(viewModelStoreOwner = viewModelStoreOwner)
 
-            film?.let {
-                FilmDetailScreen(
-                    film = it,
-                    back = navigationActions.back
-                )
-            }
+            FilmDetailScreen(
+                viewModel = viewModel,
+                back = navigationActions.back
+            )
         }
     }
 }

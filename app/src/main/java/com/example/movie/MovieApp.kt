@@ -34,12 +34,18 @@ fun MovieApp() {
                             bottomBarItems.forEach { screen ->
                                 BottomNavigationItem(
                                     icon = {
-                                        Icon(
-                                            imageVector = screen.iconVector,
-                                            contentDescription = null
-                                        )
+                                        screen.iconVector?.let { icon ->
+                                            Icon(
+                                                imageVector = icon,
+                                                contentDescription = null
+                                            )
+                                        }
                                     },
-                                    label = { Text(stringResource(screen.resourceId)) },
+                                    label = {
+                                        screen.resourceId?.let { label ->
+                                            Text(stringResource(label))
+                                        }
+                                    },
                                     selected = currentDestination.hierarchy.any { it.route == screen.route },
                                     onClick = {
                                         navController.navigate(screen.route) {
