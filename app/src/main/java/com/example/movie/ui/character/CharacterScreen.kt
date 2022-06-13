@@ -1,4 +1,4 @@
-package com.example.movie.ui.people
+package com.example.movie.ui.character
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -13,18 +13,17 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import com.example.movie.R
-import com.example.movie.model.Person
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PeopleScreen(viewModel: PeopleViewModel) {
-    val items by viewModel.people.observeAsState()
-    val selectedPerson by viewModel.selectedPerson.observeAsState()
+fun CharacterScreen(viewModel: CharacterViewModel) {
+    val items by viewModel.characters.observeAsState()
+    val selectedCharacter by viewModel.selectedCharacter.observeAsState()
 
     items?.let {
         LazyVerticalGrid(
             modifier = Modifier.background(
-                selectedPerson?.hairColor ?: MaterialTheme.colors.background
+                selectedCharacter?.hairColor ?: MaterialTheme.colors.background
             ),
             columns = GridCells.Fixed(3),
             contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_normal)),
@@ -32,7 +31,7 @@ fun PeopleScreen(viewModel: PeopleViewModel) {
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_normal))
         ) {
             items(items = it, key = { person -> person.id }) { person ->
-                PersonView(person = person) {
+                CharacterView(character = person) {
                     viewModel.selectPerson(person)
                 }
             }

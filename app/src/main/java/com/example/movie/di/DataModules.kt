@@ -2,10 +2,10 @@ package com.example.movie.di
 
 import com.example.movie.data.source.ColorDataSource
 import com.example.movie.data.source.FilmDataSource
-import com.example.movie.data.source.PeopleDataSource
+import com.example.movie.data.source.CharacterDataSource
 import com.example.movie.data.source.remote.ColorRemoteDataSource
 import com.example.movie.data.source.remote.FilmRemoteDataSource
-import com.example.movie.data.source.remote.PeopleRemoteDataSource
+import com.example.movie.data.source.remote.CharacterRemoteDataSource
 import com.example.movie.data.source.repository.*
 import dagger.Module
 import dagger.Provides
@@ -20,7 +20,7 @@ annotation class RemoteFilmDataSource
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class RemotePeopleDataSource
+annotation class RemoteCharacterDataSource
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
@@ -40,10 +40,10 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun providePeopleRepository(
-        @RemotePeopleDataSource remotePeopleDataSource: PeopleDataSource
-    ): PeopleRepository {
-        return DefaultPeopleRepository(remotePeopleDataSource)
+    fun provideCharacterRepository(
+        @RemoteCharacterDataSource remoteCharacterDataSource: CharacterDataSource
+    ): CharacterRepository {
+        return DefaultCharacterRepository(remoteCharacterDataSource)
     }
 
     @Singleton
@@ -65,9 +65,9 @@ object DataSourceModule {
     fun provideFilmRemoteDataSource(): FilmDataSource = FilmRemoteDataSource
 
     @Singleton
-    @RemotePeopleDataSource
+    @RemoteCharacterDataSource
     @Provides
-    fun providePeopleRemoteDataSource(): PeopleDataSource = PeopleRemoteDataSource
+    fun provideCharacterRemoteDataSource(): CharacterDataSource = CharacterRemoteDataSource
 
     @Singleton
     @RemoteColorDataSource

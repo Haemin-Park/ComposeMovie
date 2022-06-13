@@ -21,7 +21,7 @@ fun MovieApp() {
 
         val bottomBarItems = listOf(
             Screen.Home,
-            Screen.People,
+            Screen.Character,
         )
 
         Scaffold(

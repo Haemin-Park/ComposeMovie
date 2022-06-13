@@ -1,9 +1,9 @@
 package com.example.movie.data
 
 import androidx.compose.ui.graphics.Color
-import com.example.movie.model.Person
+import com.example.movie.model.Character
 
-data class PersonItem(
+data class CharacterItem(
     val age: String,
     val eye_color: String,
     val films: List<String>,
@@ -15,7 +15,7 @@ data class PersonItem(
     val url: String
 )
 
-fun PersonItem.toModel(hairRgb: Rgb) = Person(
+fun CharacterItem.toModel(hairRgb: Rgb) = Character(
     id = id,
     hairColor = Color(hairRgb.r, hairRgb.g, hairRgb.b),
     name = name

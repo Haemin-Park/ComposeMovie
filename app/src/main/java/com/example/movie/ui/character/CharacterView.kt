@@ -1,4 +1,4 @@
-package com.example.movie.ui.people
+package com.example.movie.ui.character
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,17 +13,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.movie.R
-import com.example.movie.model.Person
+import com.example.movie.model.Character
 import com.example.movie.ui.theme.Shapes
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun PersonView(person: Person, onClick: () -> Unit) {
+fun CharacterView(character: Character, onClick: () -> Unit) {
     Card(
         onClick = onClick,
         modifier = Modifier
             .height(dimensionResource(id = R.dimen.person_card_height)),
-        backgroundColor = person.hairColor,
+        backgroundColor = character.hairColor,
         elevation = dimensionResource(id = R.dimen.card_elevation)
     ) {
         Box(
@@ -33,7 +33,7 @@ fun PersonView(person: Person, onClick: () -> Unit) {
                 .fillMaxHeight()
         ) {
             Text(
-                text = person.name,
+                text = character.name,
                 color = Color.Black,
                 modifier = Modifier
                     .clip(Shapes.medium)

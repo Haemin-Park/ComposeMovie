@@ -12,8 +12,8 @@ import com.example.movie.ui.Screen
 import com.example.movie.ui.film.FilmViewModel
 import com.example.movie.ui.film.FilmsContent
 import com.example.movie.ui.film.FilmDetailScreen
-import com.example.movie.ui.people.PeopleScreen
-import com.example.movie.ui.people.PeopleViewModel
+import com.example.movie.ui.character.CharacterScreen
+import com.example.movie.ui.character.CharacterViewModel
 
 @Composable
 fun MovieAppNavGraph(
@@ -37,10 +37,10 @@ fun MovieAppNavGraph(
                 navigateToDetail = navigationActions.navigateToDetail
             )
         }
-        composable(Screen.People.route) {
-            val viewModel = hiltViewModel<PeopleViewModel>()
+        composable(Screen.Character.route) {
+            val viewModel = hiltViewModel<CharacterViewModel>()
 
-            PeopleScreen(viewModel = viewModel)
+            CharacterScreen(viewModel = viewModel)
         }
         composable(Screen.Detail.route) {
             val viewModel = hiltViewModel<FilmViewModel>(viewModelStoreOwner = viewModelStoreOwner)

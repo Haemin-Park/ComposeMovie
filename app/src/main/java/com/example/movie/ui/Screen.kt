@@ -10,5 +10,5 @@ import com.example.movie.R
 sealed class Screen(val route: String, @StringRes val resourceId: Int?, val iconVector: ImageVector?) {
     object Home : Screen("HOME", R.string.movie, Icons.Filled.Home)
     object Detail : Screen("DETAIL", null, null)
-    object People : Screen("PEOPLE", R.string.people, Icons.Filled.Person)
+    object Character : Screen("CHARACTER", R.string.character, Icons.Filled.Person)
 }
