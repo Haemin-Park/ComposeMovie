@@ -1,9 +1,8 @@
 package com.example.movie.ui.character
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.movie.data.source.repository.CharacterRepository
 import com.example.movie.domain.CharacterWithColorCodeUseCase
 import com.example.movie.model.Character
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,13 +11,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
+    private val characterRepository: CharacterRepository,
     characterWithColorCodeUseCase: CharacterWithColorCodeUseCase
 ) : ViewModel() {
     val characters = characterWithColorCodeUseCase.character
 
-    private val _selectedCharacter = MutableLiveData<Character>()
-    val selectedCharacter: LiveData<Character>
-        get() = _selectedCharacter
+    val selectedCharacter = characterRepository.observeCharacterSelected()
 
     init {
         viewModelScope.launch {
@@ -27,6 +25,6 @@ class CharacterViewModel @Inject constructor(
     }
 
     fun selectPerson(character: Character) {
-        _selectedCharacter.value = character
+        characterRepository.selectCharacter(character)
     }
 }

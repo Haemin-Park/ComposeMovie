@@ -37,6 +37,6 @@ class FilmViewModel @Inject constructor(
     }
 
     fun selectFilm(film: Film) {
-        filmRepository.selectedFilm(film)
+        filmRepository.selectFilm(film)
     }
 }

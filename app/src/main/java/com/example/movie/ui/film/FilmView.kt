@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.em
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.movie.R
 import com.example.movie.model.Film
@@ -38,13 +38,6 @@ import com.example.movie.ui.theme.MovieTheme
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FilmView(film: Film, onClick: () -> Unit) {
-    val painter = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current)
-            .placeholder(R.drawable.placeholder)
-            .data(film.image)
-            .build()
-    )
-
     val starId = "starId"
     val inlineContent = mapOf(
         Pair(
@@ -69,11 +62,14 @@ fun FilmView(film: Film, onClick: () -> Unit) {
         onClick = onClick,
         elevation = dimensionResource(id = R.dimen.card_elevation)
     ) {
-        Box() {
-            Image(
-                painter = painter,
-                contentScale = ContentScale.Crop,
+        Box {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .placeholder(R.drawable.placeholder)
+                    .data(film.image)
+                    .build(),
                 contentDescription = null,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(dimensionResource(id = R.dimen.film_card_height))

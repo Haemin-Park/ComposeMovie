@@ -18,7 +18,7 @@ class DefaultFilmRepository(
         return filmRemoteDataSource.getFilms()
     }
 
-    override fun selectedFilm(film: Film) {
+    override fun selectFilm(film: Film) {
         selectedFilm.value = film
     }
 

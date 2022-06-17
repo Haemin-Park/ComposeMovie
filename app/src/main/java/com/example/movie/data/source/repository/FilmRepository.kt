@@ -8,6 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface FilmRepository {
     suspend fun getFilms() : Result<List<FilmItem>>
-    fun selectedFilm(film: Film)
+    fun selectFilm(film: Film)
     fun observeFilmSelected() : LiveData<Film>
 }
