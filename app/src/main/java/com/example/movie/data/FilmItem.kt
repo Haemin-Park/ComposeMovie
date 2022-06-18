@@ -23,6 +23,7 @@ data class FilmItem(
 )
 
 fun FilmItem.toModel() = Film(
+    id = id,
     director = director,
     image = image,
     movieBanner = movie_banner,

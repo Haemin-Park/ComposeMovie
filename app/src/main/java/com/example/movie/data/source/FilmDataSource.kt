@@ -1,8 +1,8 @@
 package com.example.movie.data.source
 
-import com.example.movie.data.FilmItem
 import com.example.movie.data.Result
+import com.example.movie.model.Film
 
 interface FilmDataSource {
-    suspend fun getFilms() : Result<List<FilmItem>>
+    suspend fun getFilms() : Result<List<Film>>
 }

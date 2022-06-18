@@ -1,6 +1,12 @@
 package com.example.movie.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "films")
 data class Film(
+    @PrimaryKey
+    val id: String,
     val director: String,
     val image: String,
     val movieBanner: String,
@@ -14,6 +20,7 @@ data class Film(
 
 val fakeFilmDatas = arrayOf(
     Film(
+        "0",
         "Hayao Miyazaki",
         "https://image.tmdb.org/t/p/w533_and_h300_bestv2/3cyjYtLWCBE1uvWINHFsFnE8LUK.jpg",
         "https://image.tmdb.org/t/p/w533_and_h300_bestv2/3cyjYtLWCBE1uvWINHFsFnE8LUK.jpg",
@@ -25,6 +32,7 @@ val fakeFilmDatas = arrayOf(
         "124"
     ),
     Film(
+        "1",
         "Isao Takahata",
         "https://image.tmdb.org/t/p/w533_and_h300_bestv2/3cyjYtLWCBE1uvWINHFsFnE8LUK.jpg",
         "https://image.tmdb.org/t/p/w533_and_h300_bestv2/3cyjYtLWCBE1uvWINHFsFnE8LUK.jpg",
