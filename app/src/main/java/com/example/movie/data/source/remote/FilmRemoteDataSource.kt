@@ -20,4 +20,7 @@ object FilmRemoteDataSource : FilmDataSource {
             Result.Error(e.message ?: "Internet error runs")
         }
     }
+
+    override suspend fun saveFilms(films: List<Film>) {
+    }
 }

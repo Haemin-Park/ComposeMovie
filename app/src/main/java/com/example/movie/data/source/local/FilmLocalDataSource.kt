@@ -18,4 +18,10 @@ class FilmLocalDataSource(
             Result.Error(e.message ?: "Something goes wrong")
         }
     }
+
+    override suspend fun saveFilms(films: List<Film>) {
+        withContext(ioDispatcher){
+            filmDao.insertFilms(*films.toTypedArray())
+        }
+    }
 }

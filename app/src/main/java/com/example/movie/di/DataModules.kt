@@ -1,22 +1,32 @@
 package com.example.movie.di
 
+import android.content.Context
+import androidx.room.Room
+import com.example.movie.data.source.CharacterDataSource
 import com.example.movie.data.source.ColorDataSource
 import com.example.movie.data.source.FilmDataSource
-import com.example.movie.data.source.CharacterDataSource
+import com.example.movie.data.source.local.FilmDatabase
+import com.example.movie.data.source.local.FilmLocalDataSource
+import com.example.movie.data.source.remote.CharacterRemoteDataSource
 import com.example.movie.data.source.remote.ColorRemoteDataSource
 import com.example.movie.data.source.remote.FilmRemoteDataSource
-import com.example.movie.data.source.remote.CharacterRemoteDataSource
 import com.example.movie.data.source.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class RemoteFilmDataSource
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class LocalFilmDataSource
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
@@ -33,9 +43,10 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideFilmRepository(
-        @RemoteFilmDataSource remoteFilmDataSource: FilmDataSource
+        @RemoteFilmDataSource remoteFilmDataSource: FilmDataSource,
+        @LocalFilmDataSource localFilmDataSource: FilmDataSource
     ): FilmRepository {
-        return DefaultFilmRepository(remoteFilmDataSource)
+        return DefaultFilmRepository(remoteFilmDataSource, localFilmDataSource)
     }
 
     @Singleton
@@ -65,6 +76,16 @@ object DataSourceModule {
     fun provideFilmRemoteDataSource(): FilmDataSource = FilmRemoteDataSource
 
     @Singleton
+    @LocalFilmDataSource
+    @Provides
+    fun provideFilmLocalDataSource(
+        database: FilmDatabase,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): FilmDataSource {
+        return FilmLocalDataSource(database.filmDao(), ioDispatcher)
+    }
+
+    @Singleton
     @RemoteCharacterDataSource
     @Provides
     fun provideCharacterRemoteDataSource(): CharacterDataSource = CharacterRemoteDataSource
@@ -73,4 +94,19 @@ object DataSourceModule {
     @RemoteColorDataSource
     @Provides
     fun provideColorRemoteDataSource(): ColorDataSource = ColorRemoteDataSource
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
+
+    @Singleton
+    @Provides
+    fun provideDatabase(@ApplicationContext context: Context): FilmDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            FilmDatabase::class.java,
+            "film.db"
+        ).build()
+    }
 }

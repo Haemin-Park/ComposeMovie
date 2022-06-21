@@ -5,4 +5,5 @@ import com.example.movie.model.Film
 
 interface FilmDataSource {
     suspend fun getFilms() : Result<List<Film>>
+    suspend fun saveFilms(films: List<Film>)
 }

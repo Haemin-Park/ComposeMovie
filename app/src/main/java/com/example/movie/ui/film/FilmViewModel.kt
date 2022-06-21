@@ -1,9 +1,11 @@
 package com.example.movie.ui.film
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.movie.data.Result
 import com.example.movie.data.source.repository.FilmRepository
-import com.example.movie.data.toModel
 import com.example.movie.model.Film
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,6 +22,9 @@ class FilmViewModel @Inject constructor(
     val selectedFilm = filmRepository.observeFilmSelected()
 
     init {
+        viewModelScope.launch {
+            filmRepository.refreshFilms()
+        }
         getFilms()
     }
 
@@ -27,7 +32,7 @@ class FilmViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = filmRepository.getFilms()) {
                 is Result.Success -> {
-                    _films.value = result.data.map { it.toModel() }
+                    _films.value = result.data
                 }
                 is Result.Error -> {
 
