@@ -5,7 +5,7 @@ import androidx.room.Room
 import com.example.movie.data.source.CharacterDataSource
 import com.example.movie.data.source.ColorDataSource
 import com.example.movie.data.source.FilmDataSource
-import com.example.movie.data.source.local.FilmDatabase
+import com.example.movie.data.source.local.AppDatabase
 import com.example.movie.data.source.local.FilmLocalDataSource
 import com.example.movie.data.source.remote.CharacterRemoteDataSource
 import com.example.movie.data.source.remote.ColorRemoteDataSource
@@ -79,7 +79,7 @@ object DataSourceModule {
     @LocalFilmDataSource
     @Provides
     fun provideFilmLocalDataSource(
-        database: FilmDatabase,
+        database: AppDatabase,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ): FilmDataSource {
         return FilmLocalDataSource(database.filmDao(), ioDispatcher)
@@ -102,10 +102,10 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context): FilmDatabase {
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room.databaseBuilder(
             context.applicationContext,
-            FilmDatabase::class.java,
+            AppDatabase::class.java,
             "film.db"
         ).build()
     }

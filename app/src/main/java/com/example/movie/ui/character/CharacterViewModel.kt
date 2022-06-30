@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movie.data.source.repository.CharacterRepository
 import com.example.movie.domain.CharacterWithColorCodeUseCase
-import com.example.movie.model.Character
+import com.example.movie.model.CharacterWithColorCode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +24,7 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    fun selectPerson(character: Character) {
+    fun selectPerson(character: CharacterWithColorCode) {
         characterRepository.selectCharacter(character)
     }
 }

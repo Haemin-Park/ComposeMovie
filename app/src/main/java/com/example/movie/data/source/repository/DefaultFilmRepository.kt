@@ -12,15 +12,15 @@ class DefaultFilmRepository(
 ) : FilmRepository {
     private val selectedFilm = MutableLiveData<Film>()
 
-    override suspend fun getFilms(): Result<List<Film>> {
-        return filmLocalDataSource.getFilms()
-    }
+    override fun getFilms() = filmLocalDataSource.getFilms()
 
     override suspend fun refreshFilms() {
         val remoteData = filmRemoteDataSource.getFilms()
 
-        if (remoteData is Result.Success) {
-            filmLocalDataSource.saveFilms(remoteData.data)
+        remoteData.collect {
+            if (it is Result.Success) {
+                filmLocalDataSource.saveFilms(it.data)
+            }
         }
     }
 

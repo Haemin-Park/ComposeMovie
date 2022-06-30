@@ -7,8 +7,8 @@ import com.example.movie.model.Film
 import kotlinx.coroutines.flow.Flow
 
 interface FilmRepository {
-    suspend fun getFilms() : Result<List<Film>>
+    fun getFilms(): Flow<Result<List<Film>>>
     suspend fun refreshFilms()
     fun selectFilm(film: Film)
-    fun observeFilmSelected() : LiveData<Film>
+    fun observeFilmSelected(): LiveData<Film>
 }

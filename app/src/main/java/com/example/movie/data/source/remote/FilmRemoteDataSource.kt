@@ -5,19 +5,22 @@ import com.example.movie.data.source.FilmDataSource
 import com.example.movie.data.toModel
 import com.example.movie.model.Film
 import com.example.movie.network.MovieService
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 
 object FilmRemoteDataSource : FilmDataSource {
-    override suspend fun getFilms(): Result<List<Film>> {
-        return try {
+    override fun getFilms() = flow {
+        try {
             val response = MovieService.api.getFilms()
             val responseBody = response.body()
             if (responseBody != null && response.isSuccessful) {
-                Result.Success(responseBody.map { it.toModel() })
+                emit(Result.Success(responseBody.map { it.toModel() }))
             } else {
-                Result.Error(response.message() ?: "Something goes wrong")
+                emit(Result.Error(response.message() ?: "Something goes wrong"))
             }
         } catch (e: Exception) {
-            Result.Error(e.message ?: "Internet error runs")
+            emit(Result.Error(e.message ?: "Internet error runs"))
         }
     }
 

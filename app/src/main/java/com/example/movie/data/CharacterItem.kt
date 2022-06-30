@@ -1,6 +1,5 @@
 package com.example.movie.data
 
-import androidx.compose.ui.graphics.Color
 import com.example.movie.model.Character
 
 data class CharacterItem(
@@ -15,8 +14,8 @@ data class CharacterItem(
     val url: String
 )
 
-fun CharacterItem.toModel(hairRgb: Rgb) = Character(
+fun CharacterItem.toModel() = Character(
     id = id,
-    hairColor = Color(hairRgb.r, hairRgb.g, hairRgb.b),
+    hairColor = hair_color,
     name = name
 )

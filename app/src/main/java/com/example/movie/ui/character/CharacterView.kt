@@ -13,12 +13,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.movie.R
-import com.example.movie.model.Character
+import com.example.movie.model.CharacterWithColorCode
 import com.example.movie.ui.theme.Shapes
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CharacterView(character: Character, onClick: () -> Unit) {
+fun CharacterView(character: CharacterWithColorCode, onClick: () -> Unit) {
     Card(
         onClick = onClick,
         modifier = Modifier
