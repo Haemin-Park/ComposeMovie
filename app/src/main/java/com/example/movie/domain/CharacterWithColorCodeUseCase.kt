@@ -2,7 +2,9 @@ package com.example.movie.domain
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.movie.data.*
+import com.example.movie.data.Color
+import com.example.movie.data.Result
+import com.example.movie.data.defaultColor
 import com.example.movie.data.source.repository.CharacterRepository
 import com.example.movie.data.source.repository.ColorRepository
 import com.example.movie.model.Character
@@ -19,14 +21,11 @@ class CharacterWithColorCodeUseCase @Inject constructor(
         get() = _character
 
     suspend operator fun invoke() {
-        when (val result = characterRepository.getCharacters()) {
-            is Result.Success -> {
-                result.data.map {
-                    _character.value = _character.value?.plus(it.addColorCode(getColorCode(it).rgb))
+        characterRepository.getCharacters().collect {
+            if (it is Result.Success) {
+                it.data.map { c ->
+                    _character.value = _character.value?.plus(c.addColorCode(getColorCode(c).rgb))
                 }
-            }
-            is Result.Error -> {
-
             }
         }
     }

@@ -6,6 +6,7 @@ import com.example.movie.data.source.CharacterDataSource
 import com.example.movie.data.source.ColorDataSource
 import com.example.movie.data.source.FilmDataSource
 import com.example.movie.data.source.local.AppDatabase
+import com.example.movie.data.source.local.CharacterLocalDataSource
 import com.example.movie.data.source.local.FilmLocalDataSource
 import com.example.movie.data.source.remote.CharacterRemoteDataSource
 import com.example.movie.data.source.remote.ColorRemoteDataSource
@@ -34,6 +35,10 @@ annotation class RemoteCharacterDataSource
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
+annotation class LocalCharacterDataSource
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
 annotation class RemoteColorDataSource
 
 @Module
@@ -52,9 +57,10 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideCharacterRepository(
-        @RemoteCharacterDataSource remoteCharacterDataSource: CharacterDataSource
+        @RemoteCharacterDataSource remoteCharacterDataSource: CharacterDataSource,
+        @LocalCharacterDataSource localCharacterDataSource: CharacterDataSource
     ): CharacterRepository {
-        return DefaultCharacterRepository(remoteCharacterDataSource)
+        return DefaultCharacterRepository(remoteCharacterDataSource, localCharacterDataSource)
     }
 
     @Singleton
@@ -89,6 +95,16 @@ object DataSourceModule {
     @RemoteCharacterDataSource
     @Provides
     fun provideCharacterRemoteDataSource(): CharacterDataSource = CharacterRemoteDataSource
+
+    @Singleton
+    @LocalCharacterDataSource
+    @Provides
+    fun provideLocalCharacterDataSource(
+        database: AppDatabase,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): CharacterDataSource {
+        return CharacterLocalDataSource(database.CharacterDao(), ioDispatcher)
+    }
 
     @Singleton
     @RemoteColorDataSource

@@ -20,6 +20,7 @@ class CharacterViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            characterRepository.refreshCharacters()
             characterWithColorCodeUseCase()
         }
     }

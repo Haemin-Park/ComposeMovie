@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.movie.model.Character
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CharacterDao {
@@ -12,5 +13,5 @@ interface CharacterDao {
     suspend fun insertCharacters(vararg character: Character)
 
     @Query("SELECT * FROM Characters")
-    suspend fun getCharacters(): List<Character>
+    fun getCharacters(): Flow<List<Character>>
 }
