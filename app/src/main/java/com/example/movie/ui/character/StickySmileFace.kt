@@ -4,17 +4,20 @@ import android.annotation.SuppressLint
 import android.view.MotionEvent
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -53,11 +56,16 @@ fun StickySmileFace(color: Color, faceSize: Dp) {
         Animatable(0f)
     }
 
+    val selected = remember { mutableStateOf(false) }
+    val scale = animateFloatAsState(if (selected.value) 2f else 1f)
+
+
     Canvas(modifier = Modifier
         .size(faceSize)
         .offset {
             IntOffset(offsetX.value.toInt(), offsetY.value.toInt())
         }
+        .scale(scale.value)
         .pointerInteropFilter {
             when (it.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -67,6 +75,7 @@ fun StickySmileFace(color: Color, faceSize: Dp) {
                         offsetX.snapTo(it.x - pxFaceSize / 2)
                         offsetY.snapTo(it.y - pxFaceSize / 2)
                     }
+                    selected.value = true
                 }
                 MotionEvent.ACTION_UP -> {
                     coroutineScope.launch {
@@ -75,6 +84,7 @@ fun StickySmileFace(color: Color, faceSize: Dp) {
                             animationSpec = tween(durationMillis = 1000)
                         )
                     }
+                    selected.value = false
                 }
             }
             true
