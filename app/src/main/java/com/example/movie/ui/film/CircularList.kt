@@ -40,10 +40,8 @@ fun CircularList(
                 CircularPosition(
                     x = x,
                     rightTopX = x + placeable.width,
-                    leftBottomY = y + placeable.height,
                     y = y,
-                    w = placeable.measuredWidth,
-                    h = placeable.measuredHeight
+                    leftBottomY = y + placeable.height
                 )
             )
 
@@ -88,8 +86,6 @@ fun PreviewCircleList() {
 data class CircularPosition(
     val x: Int,
     val rightTopX: Int,
-    val leftBottomY: Int,
     val y: Int,
-    val w: Int,
-    val h: Int
+    val leftBottomY: Int
 )
