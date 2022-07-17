@@ -21,20 +21,35 @@ fun CircularList(
         val cnt = measurables.size
         val r = 360 / cnt.toDouble()
 
-        val angle = mutableListOf<Double>()
+        val angle = mutableListOf<Int>()
         repeat(cnt) {
-            angle.add((it + 1) * r * (PI / 180))
+            angle.add((it + 1) * r.toInt())
         }
 
-        val circleRadius: Int = if (constraints.hasFixedWidth) constraints.maxWidth / 3 else 500
+        val circleRadius: Int = if (constraints.hasFixedWidth) constraints.maxWidth / 3 else 400
 
         val circularPositionData = mutableListOf<CircularPosition>()
         val itemConstraints = Constraints(maxWidth = circleRadius / 2, maxHeight = circleRadius / 2)
+        val ic1 = Constraints.fixed(300, 400)
+        val ic2 = Constraints.fixed(200, 300)
+        val ic3 = Constraints.fixed(100, 200)
         val placeables = measurables.mapIndexed { index, measurable ->
-            // Measure each child
-            val placeable = measurable.measure(itemConstraints)
-            val x = (cos(angle[index]) * circleRadius).toInt() + circleRadius
-            val y = (sin(angle[index]) * circleRadius).toInt() + circleRadius
+            val radians = angle[index] * (PI / 180)
+            val c = when {
+                angle[index] in 46..134 -> {
+                    ic1
+                }
+                angle[index] <= 45 || angle[index] >= 315 -> {
+                    ic2
+                }
+                angle[index] in 135..225 -> {
+                    ic2
+                }
+                else -> ic3
+            }
+            val placeable = measurable.measure(c)
+            val x = (cos(radians) * circleRadius).toInt() + circleRadius - placeable.width / 2
+            val y = (sin(radians) * circleRadius).toInt() + circleRadius
 
             circularPositionData.add(
                 CircularPosition(
@@ -46,6 +61,14 @@ fun CircularList(
             )
 
             placeable
+        }
+
+        val d = circularPositionData.minOf { it.x }
+        for (i in circularPositionData.indices) {
+            val oldX = circularPositionData[i].x
+            val oldRightX = circularPositionData[i].rightTopX
+            circularPositionData[i] =
+                circularPositionData[i].copy(x = oldX + -1 * d, rightTopX = oldRightX + -1 * d)
         }
 
         /**
@@ -72,14 +95,14 @@ fun PreviewCircleList() {
         modifier = Modifier
             .background(Color.White)
     ) {
-        Text(text = "1")
-        Text(text = "2")
-        Text(text = "3")
-        Text(text = "4")
-        Text(text = "5")
-        Text(text = "6")
-        Text(text = "7")
-        Text(text = "8")
+        Text(text = "1", modifier = Modifier.background(Color.Red))
+        Text(text = "2", modifier = Modifier.background(Color.Yellow))
+        Text(text = "3", modifier = Modifier.background(Color.Green))
+        Text(text = "4", modifier = Modifier.background(Color.Blue))
+        Text(text = "5", modifier = Modifier.background(Color.Cyan))
+        Text(text = "6", modifier = Modifier.background(Color.Magenta))
+        Text(text = "7", modifier = Modifier.background(Color.DarkGray))
+        Text(text = "8", modifier = Modifier.background(Color.LightGray))
     }
 }
 
